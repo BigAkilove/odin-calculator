@@ -1,6 +1,14 @@
 body {
     padding: 0;
     margin: 0;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.result {
+    border: 1px black solid;
+    padding: 20px 10px;
+    margin-bottom: 20px;
 }
 
 .container {
@@ -10,13 +18,23 @@ body {
     gap: 10px;
 }
 
-.case {
+.case,.hovered-case {
     height: 30px;
     width: 30px;
     padding: 10px;
-    text-align: center;
+    display: flex;
     justify-content: center;
+    align-items: center;
     border: 1px black solid;
+    border-radius: 15px;
+}
+
+.hovered-case {
+    background-color: rgb(185, 178, 178);
+}
+
+#clear {
+    width: 60px;
 }
 
 .break {
