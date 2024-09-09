@@ -38,10 +38,29 @@ function clear () {
     secondNumber = 0
 }
 
-function OperateAndDefineVariables() {
+function OperateAndSetSecondNumberAndCalculated() {
     secondNumber = Number(displayText);
-    display.innerText = operate(firstNumber, operator, secondNumber);
+    display.innerText = `${operate(firstNumber, operator, secondNumber)}`;
     calculated = true;
+}
+
+function setOperatorAndFirstNumber () {
+    operator = clickEvent.innerText;
+    firstNumber = Number(display.innerText);
+}
+
+function addNumbersAndDot () {
+    if (!calculated) {
+
+        display.innerText += clickEvent.innerText;
+        displayText += clickEvent.innerText;
+    break;
+    } else {
+
+        display.innerText = clickEvent.innerText;
+        displayText = clickEvent.innerText;
+        calculated = false;
+    }
 }
 
 let firstNumber 
@@ -55,21 +74,40 @@ let displayText = display.innerText;
 let calculated = false;
 
 document.addEventListener('click', (event) => {
-    console.log(event)
-    let clickEvent = event.target
+    let clickEvent = event.target;
+
     switch(clickEvent.className) {
         case 'case number':
             if (!calculated) {
 
-            display.innerText += clickEvent.innerText
-            displayText += clickEvent.innerText
+            display.innerText += clickEvent.innerText;
+            displayText += clickEvent.innerText;
+        break;
         } else {
 
             display.innerText = clickEvent.innerText;
             displayText = clickEvent.innerText;
             calculated = false;
         }
+        case 'case number dot':
+            if (displayText.includes('.')) {
+
+            } else {
+            if (!calculated) {
+
+                display.innerText += clickEvent.innerText;
+                displayText += clickEvent.innerText;
+        break;
+            } else {
+    
+                display.innerText = clickEvent.innerText;
+                displayText = clickEvent.innerText;
+                calculated = false;
+            }
+        }
     }
+    
+
     switch(clickEvent.id) {
         case 'plus':
         case 'minus':
@@ -77,14 +115,12 @@ document.addEventListener('click', (event) => {
         case 'divide':
             if (operator) {
 
-                secondNumber = Number(displayText);
-                display.innerText = operate(firstNumber, operator, secondNumber);
-                calculated = true;
-
-                firstNumber = Number(display.innerText)
-                operator = clickEvent.innerText
-                secondNumber = ''
-                displayText = 0
+                OperateAndSetSecondNumberAndCalculated();
+                operator = clickEvent.innerText;
+                firstNumber = Number(display.innerText);
+                
+                secondNumber = '';
+                displayText = 0;
                 //called when we use the operator button to enter a third number, we first need to calculate the first two numbers
             } else {
 
@@ -98,10 +134,8 @@ document.addEventListener('click', (event) => {
             if (!operator) {
 
             } else {
-            secondNumber = Number(displayText);
-            display.innerText = operate(firstNumber, operator, secondNumber);
-            calculated = true;
-            operator = '';
+                OperateAndSetSecondNumberAndCalculated();
+                operator = '';
             }
 
         break;
