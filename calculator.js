@@ -54,10 +54,10 @@ function addNumbersAndDot () {
 
         display.innerText += clickEvent.innerText;
         displayText += clickEvent.innerText;
-    break;
     } else {
 
         display.innerText = clickEvent.innerText;
+        displayText = ''
         displayText = clickEvent.innerText;
         calculated = false;
     }
@@ -72,39 +72,30 @@ display.innerText = 0;
 let displayText = display.innerText;
 
 let calculated = false;
+let clickEvent
 
 document.addEventListener('click', (event) => {
-    let clickEvent = event.target;
+    clickEvent = event.target;
 
     switch(clickEvent.className) {
         case 'case number':
-            if (!calculated) {
-
-            display.innerText += clickEvent.innerText;
-            displayText += clickEvent.innerText;
+            if (display.innerText === '0') {
+                display.innerText = '';
+            }
+            addNumbersAndDot();
+        
         break;
-        } else {
-
-            display.innerText = clickEvent.innerText;
-            displayText = clickEvent.innerText;
-            calculated = false;
-        }
         case 'case number dot':
             if (displayText.includes('.')) {
 
             } else {
-            if (!calculated) {
-
-                display.innerText += clickEvent.innerText;
-                displayText += clickEvent.innerText;
-        break;
-            } else {
-    
-                display.innerText = clickEvent.innerText;
-                displayText = clickEvent.innerText;
-                calculated = false;
+            addNumbersAndDot();
             }
-        }
+            console.log(displayText === '.')
+            if (displayText === '.') {
+                display.innerText = '0.'
+            }
+        break
     }
     
 
