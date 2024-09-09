@@ -2,29 +2,17 @@ function add (...items) {
     return items.reduce((sum, item) => sum += item,0) 
 }
 
-function subtract (...items) {
-    return items.reduce((sum, item) => sum -= item,0) 
+function subtract (firstNumber,secondNumber) {
+    return firstNumber - secondNumber
 }
 
 function multiply (...items) {
     return items.reduce((sum, item) => sum *= item,1) 
 }
 
-/*function divide (...items) {
-    console.log(items)
-    return items.reduce((sum, item) => {
-        console.log(sum,item)
-        sum /= item,1
-    }) 
-}*/
-
 function divide (dividedNumber, dividingNumber) {
     return dividedNumber / dividingNumber
 }
-
-let firstNumber 
-let operator
-let secondNumber
 
 function operate (firstNumber,operator,secondNumber) {
     switch(operator) {
@@ -41,11 +29,33 @@ function operate (firstNumber,operator,secondNumber) {
     }
 }
 
-let display = document.querySelector('.result');
+function clear () {
+    display.innerText = 0;
+    displayText = '';
+    operator = '';
+    numberInProcess = '';
+    firstNumber = 0
+    secondNumber = 0
+}
+
+function OperateAndDefineVariables() {
+    secondNumber = Number(displayText);
+    display.innerText = operate(firstNumber, operator, secondNumber);
+    calculated = true;
+}
+
+let firstNumber 
+let operator
+let secondNumber
+
+let display = document.querySelector('#final-number');
+display.innerText = 0;
 let displayText = display.innerText;
+
 let calculated = false;
 
 document.addEventListener('click', (event) => {
+    console.log(event)
     let clickEvent = event.target
     switch(clickEvent.className) {
         case 'case number':
@@ -55,10 +65,9 @@ document.addEventListener('click', (event) => {
             displayText += clickEvent.innerText
         } else {
 
-            display.innerText = clickEvent.innerText
-            displayText = clickEvent.innerText
-            operator = ''
-            calculated = false
+            display.innerText = clickEvent.innerText;
+            displayText = clickEvent.innerText;
+            calculated = false;
         }
     }
     switch(clickEvent.id) {
@@ -67,14 +76,16 @@ document.addEventListener('click', (event) => {
         case 'times':
         case 'divide':
             if (operator) {
-                secondNumber = Number(displayText)
+
+                secondNumber = Number(displayText);
                 display.innerText = operate(firstNumber, operator, secondNumber);
                 calculated = true;
 
                 firstNumber = Number(display.innerText)
-                //operator = clickEvent.innerText
+                operator = clickEvent.innerText
                 secondNumber = ''
-                //this is called when we want to use the operator button to enter a third number, we first need to calculate the first two numbers
+                displayText = 0
+                //called when we use the operator button to enter a third number, we first need to calculate the first two numbers
             } else {
 
                 operator = clickEvent.innerText;
@@ -84,17 +95,21 @@ document.addEventListener('click', (event) => {
             }
         break;
         case 'equal':
+            if (!operator) {
+
+            } else {
             secondNumber = Number(displayText);
             display.innerText = operate(firstNumber, operator, secondNumber);
             calculated = true;
+            operator = '';
+            }
 
         break;
         case 'clear':
-            display.innerText = '';
-            displayText = '';
-            operator = '';
-     }
-     console.log('dt: ' +displayText, 'ope: ' +operator,'FN: ' +firstNumber,'SN: ' + secondNumber)
+            clear ();
+    }
+
+    console.log('dt:' +displayText, 'ope:' +operator,'FN:' +firstNumber,'SN:' + secondNumber, 'calc:' + calculated)
 })
 
 /*document.addEventListener('mousemove', (event) => {
@@ -104,5 +119,3 @@ document.addEventListener('click', (event) => {
             clickEvent.classList.add('hovered-case')
     }
 })*/
-console.log(operate(4,'/',5))
-console.log(operate(12,'/',5))
